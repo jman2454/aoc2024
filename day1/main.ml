@@ -1,7 +1,6 @@
 let answer l1 l2 = 
   List.combine (List.sort compare l1) (List.sort compare l2)
-  |> List.map (fun (x, y) -> abs (x - y))
-  |> List.fold_left (+) 0
+  |> List.fold_left (fun acc (x, y) -> acc + abs (x - y)) 0
 
 let parse_input s = 
   s |> String.split_on_char '\n' 
