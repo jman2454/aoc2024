@@ -8,7 +8,10 @@ let happy l =
         | None -> true, `Start
         | Some(prev) -> 
           let d = if x > prev && dir <> `Down then `Up else if x < prev && dir <> `Up then `Down else `None in 
-          d <> `None && abs (prev - x) <= 3, d
+          (
+           (* ( if p then( print_endline @@ string_of_int i;
+          print_endline @@ string_of_bool (d <> `None);) else ()); *)
+          d <> `None && abs (prev - x) <= 3, d)
       in
       (good, Some(x), dir, if not good then i else first_bad)
     else
@@ -17,6 +20,10 @@ let happy l =
 
 let omit i l = 
   List.filteri (fun j _ -> i <> j) l
+
+let string_of_list str_of_el l = 
+  if l = [] then "[]" else
+  "[" ^ List.fold_left (fun acc x -> acc ^ ", " ^ str_of_el x) (List.hd l |> str_of_el) (List.tl l) ^ "]"
 
 let happy_with_skip l = 
   let acc, first_bad = happy l in
