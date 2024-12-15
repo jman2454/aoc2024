@@ -28,7 +28,8 @@ if __name__ == '__main__':
     with open(dune_file, "w") as config:
         config.write(f"""(executable
  (public_name {next_puzzle_name})
- (name main))
+ (name main)
+ (libraries aoc))
 """)
         
     with open(os.path.join(next_dir, 'main.ml'), "w") as main:

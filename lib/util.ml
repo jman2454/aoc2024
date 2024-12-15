@@ -12,3 +12,5 @@ let string_of_list str_of_el l =
 
 let print_return_int i = 
   Printf.printf "%d\n" i; i
+
+let any pred lst = List.fold_left (fun found nxt -> found || pred nxt) false lst
