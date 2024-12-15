@@ -1,4 +1,4 @@
-open Aoc.Public
+open Aoc
 
 let make_grid s = 
   String.split_on_char '\n' s
