@@ -1,27 +1,18 @@
-let monotonic l = 
+let happy l = 
   List.fold_left (fun (acc, prev, dir) x -> 
     if acc then 
-      let dir = 
+      let good = 
         match prev with 
-        | None -> `Start
-        | Some(prev) -> if x > prev && dir <> `Down then `Up else if x < prev && dir <> `Up then `Down else `None
+        | None -> true
+        | Some(prev) -> 
+          let d = if x > prev && dir <> `Down then `Up else if x < prev && dir <> `Up then `Down else `None in 
+          d <> `None && abs (prev - x) <= 3
       in
-      (dir <> `None, Some(x), dir)
+      (good, Some(x), dir)
     else
-      (false, None, `None)) (true, None, `None) l
+      (false, None, `None)) (true, None, `Start) l
   |> fun (acc, _, _) -> acc
 
-let diff_in_range l =
-  List.fold_left (fun (acc, prev) x -> 
-    if acc then 
-      match prev with 
-      | None -> (true, Some(x))
-      | Some(prev) -> if abs (x - prev) <= 3 && abs(x - prev) >= 1 then (true, Some(x)) else (false, None)
-    else
-      (false, None)) (true, None) l
-  |> fun (acc, _) -> acc
-
-let happy l = diff_in_range l && monotonic l
 let answer lists = List.fold_left (fun acc l -> if happy l then acc + 1 else acc) 0 lists
 
 let parse_input s = 
