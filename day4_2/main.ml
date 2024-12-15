@@ -82,7 +82,6 @@ let answer s =
     |> find_appearances "MAS"
     |> count_appearances
 
-    
 let () = 
 answer ".M.S......
 ..A..MSMS.
