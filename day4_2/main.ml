@@ -3,7 +3,7 @@ open Aoc
 let make_grid s = 
   String.split_on_char '\n' s
   |> Pvector.of_list
-  |> Pvector.map (Pvector.of_string)
+  |> Pvector.map Pvector.of_string
 
 let read_pos (x, y) grid = (grid --> y) --> x
 
@@ -81,6 +81,8 @@ let answer s =
   make_grid s 
     |> find_appearances "MAS"
     |> count_appearances
+
+    
 let () = 
 answer ".M.S......
 ..A..MSMS.
