@@ -11,26 +11,31 @@ let move (x, y) = function
 let invert = function | Up -> Down | Down -> Up | Left -> Right | Right -> Left
 let rotate_right = function | Up -> Right | Right -> Down | Down -> Left | Left -> Up
 
-let distance (x1, y1) (x2, y2) = abs (x1 - x2) + abs (y1 - y2)
+module IntTuple = struct
+  type t = int * int
+  let compare (x1, y1) (x2, y2) = 
+    match Int.compare x1 x2 with 
+    | 0 -> Int.compare y1 y2 
+    | n -> n
+end
 
-let rec find c start dir grid = 
+module TupleSet = Set.Make(IntTuple)
+
+(* exclusive of the found character's location, inclusive of all points traversed (even when we don't find c) *)
+let rec points_to_char c start dir grid acc = 
   if not @@ Grid.in_bounds start grid then 
-    None
+    acc, None
   else if Grid.at start grid = c then 
-    Some(start)
+    acc, Some(start)
   else
-    find c (move start dir) dir grid
-
-let rec boundary pos dir grid = 
-  if not @@ Grid.in_bounds pos grid then (move pos (invert dir)) else
-  boundary (move pos dir) dir grid
+    points_to_char c (move start dir) dir grid (TupleSet.add start acc)
 
 let rec count_path pos dir grid acc = 
-  match find '#' pos dir grid with 
-  | None -> acc + (distance pos @@ boundary pos dir grid)
-  | Some(obstacle_pos) -> 
+  match points_to_char '#' pos dir grid acc with 
+  | set, None -> TupleSet.union set acc
+  | set, Some(obstacle_pos) -> 
     let next_pos = move obstacle_pos (invert dir) in 
-    count_path next_pos (rotate_right dir) grid (acc + distance pos next_pos)
+    count_path next_pos (rotate_right dir) grid (TupleSet.union set acc)
 
 let start_pos grid = 
   let rec h pos = 
@@ -46,7 +51,9 @@ let start_pos grid =
   h (0, 0)
 
 let answer grid = 
-  count_path (start_pos grid) Up grid 0
+  count_path (start_pos grid) Up grid TupleSet.empty
+  |> TupleSet.elements
+  |> List.length
 
 let () = 
 "....#.....
