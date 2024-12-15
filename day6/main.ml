@@ -32,10 +32,10 @@ let rec points_to_char c start dir grid acc =
 
 let rec count_path pos dir grid acc = 
   match points_to_char '#' pos dir grid acc with 
-  | set, None -> TupleSet.union set acc
+  | set, None -> set
   | set, Some(obstacle_pos) -> 
     let next_pos = move obstacle_pos (invert dir) in 
-    count_path next_pos (rotate_right dir) grid (TupleSet.union set acc)
+    count_path next_pos (rotate_right dir) grid set
 
 let start_pos grid = 
   let rec h pos = 
