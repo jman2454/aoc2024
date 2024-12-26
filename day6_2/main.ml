@@ -53,13 +53,13 @@ let rec walk state loop_starters visited =
   else
     let loop_starters = 
       let obs_pos = move state.pos state.dir in 
-      if Grid.in_bounds obs_pos state.grid (* can only place in bounds *)
-        && Grid.at obs_pos state.grid <> '^' (* can't place at start position *)
+      if Grid.in_bounds obs_pos state.grid     (* can only place in bounds *)
+        && Grid.at obs_pos state.grid <> '^'   (* can't place at start position *)
         && not @@ TupleSet.mem obs_pos visited (* can't place where we would have already walked *)
         && loops { 
           state with 
           dir = rotate_right state.dir; 
-          grid = Grid.set obs_pos '#' state.grid 
+          grid = Grid.set obs_pos '#' state.grid
         } DTupleSet.empty then 
         TupleSet.add obs_pos loop_starters 
       else
