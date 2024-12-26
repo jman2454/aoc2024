@@ -19,3 +19,13 @@ let at_opt pos (grid : 'a t) =
 
 let set (x, y) value grid = 
   (grid, y) <-- ((grid --> y, x) <-- value)
+
+let fold_left fn acc (grid : 'a t) = 
+  Pvector.fold_left (fun acc row -> 
+    Pvector.fold_left fn acc row
+  ) acc grid
+
+let mapi fn (grid : 'a t) = 
+  Pvector.mapi (fun rowi row -> 
+    Pvector.mapi (fun coli value -> fn (rowi, coli) value) row
+  ) grid
