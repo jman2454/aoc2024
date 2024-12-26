@@ -5,7 +5,6 @@ let test result numbers =
   let rec h lst acc = 
     match lst with 
     | [] -> acc = result
-    | a::[] -> h [] (acc * a) || h [] (acc + a)
     | a::rest -> h rest (acc * a) || h rest (acc + a)
   in
   match numbers with 
