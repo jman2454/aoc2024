@@ -55,7 +55,6 @@ let modified_checksum lst =
           else
             (* enough space in the free block, so update its space usage + potentially advance if fully consumed *)
             let new_blks = (blks, head_blk) <-- Free({ len = free_blk.len - used_blk.len }) in 
-            let new_blks = (new_blks, tail_blk) <-- Taken({ used_blk with len = 0 }) in
             let new_head = if free_blk.len = used_blk.len then head_blk + 1 else head_blk in
             h new_blks new_head (find_tail_blk new_blks @@ (tail_blk - 1)) (pos + used_blk.len) 
               @@ fold_n (dot used_blk.id pos) used_blk.len acc
