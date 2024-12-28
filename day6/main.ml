@@ -13,10 +13,7 @@ let rotate_right = function | Up -> Right | Right -> Down | Down -> Left | Left 
 
 module IntTuple = struct
   type t = int * int
-  let compare (x1, y1) (x2, y2) = 
-    match Int.compare x1 x2 with 
-    | 0 -> Int.compare y1 y2 
-    | n -> n
+  let compare (x1, y1) (x2, y2) = match Int.compare x1 x2 with | 0 -> Int.compare y1 y2 | n -> n
 end
 
 module TupleSet = Set.Make(IntTuple)

@@ -25,7 +25,12 @@ let fold_left fn acc (grid : 'a t) =
     Pvector.fold_left fn acc row
   ) acc grid
 
-let mapi fn (grid : 'a t) = 
+let flipped_mapi fn (grid : 'a t) = 
   Pvector.mapi (fun rowi row -> 
     Pvector.mapi (fun coli value -> fn (rowi, coli) value) row
+  ) grid
+
+let mapi fn (grid : 'a t) = 
+  Pvector.mapi (fun rowi row -> 
+    Pvector.mapi (fun coli value -> fn (coli, rowi) value) row
   ) grid

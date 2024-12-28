@@ -1,7 +1,6 @@
 type block = { start : int; len : int; id : int }
 
-let char_to_int c = 
-  String.make 1 c |> int_of_string
+let char_to_int c = String.make 1 c |> int_of_string
 
 let parse input = 
   let rec h i (used, free, pos) = 
