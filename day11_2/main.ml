@@ -10,13 +10,6 @@
     engraved on the new stone
 ***)
 
-(*
-  there is a recurrence here -- eventually, every number will prob just turn into a number 
-  with digits whose count is a power of two -- so it will decompose into single digits
-
-  we can precompute the paths for single digits and then it should be simpler?
-*)
-
 let num_digits n = 
   log10 (float_of_int n)
   |> floor
