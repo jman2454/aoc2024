@@ -12,7 +12,7 @@ module CharMap = Map.Make(Char)
 module TupleSet = Set.Make(IntTuple)
 
 let organize_points grid = 
-  Grid.flipped_mapi (fun pos el -> 
+  Grid.mapi (fun pos el -> 
     (pos, el)
   ) grid 
   |> Grid.fold_left (fun map (pos, el) -> 
