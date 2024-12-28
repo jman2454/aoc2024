@@ -8,3 +8,4 @@ val same : int -> int -> 'a t -> bool * 'a t
 val same_no_compress : int -> int -> 'a t -> bool
 val at : int -> 'a t -> 'a
 val fold : (int -> 'a -> 'acc -> 'acc) -> 'acc -> 'a t -> 'acc
+val compress : 'a t -> 'a t

@@ -18,6 +18,7 @@ let find i (uf : 'a t) =
   in
   h i
 
+(* same as find, but does not ever update the data structure -- best to use after updating with compress *)
 let find_no_compress i (uf : 'a t) = 
   let rec h i = 
     let el = uf --> i in 
@@ -45,5 +46,7 @@ let same_no_compress i_l i_r uf : bool = find_no_compress i_l uf = find_no_compr
 
 let at i (uf : 'a t) = (uf --> i).value
 
-let fold fn acc uf = 
-  Pvector.fold_lefti (fun acc i node -> fn (find_no_compress i uf) node.value acc) acc uf
+let fold fn acc uf = Pvector.fold_lefti (fun acc i node -> fn (find_no_compress i uf) node.value acc) acc uf
+
+(* fully compresses the data structure -- best to do once done adding elements *)
+let compress (uf : 'a t) = Pvector.fold_lefti (fun uf i _ -> find i uf |> snd) uf uf

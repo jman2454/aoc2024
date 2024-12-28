@@ -311,7 +311,13 @@ let test_union_find () =
   check bool "same check on init" true (same_no_compress 0 1 uf);
   check bool "same check on init" true (same_no_compress 0 2 uf);
   check bool "same check on init" true (same_no_compress 0 3 uf);
-  check bool "same check on init" true (same_no_compress 0 4 uf)
+  check bool "same check on init" true (same_no_compress 0 4 uf);
+
+  let uf = compress uf in 
+  check bool "same check after compression" true (same_no_compress 0 1 uf);
+  check bool "same check after compression" true (same_no_compress 0 2 uf);
+  check bool "same check after compression" true (same_no_compress 0 3 uf);
+  check bool "same check after compression" true (same_no_compress 0 4 uf)
 
 let () =
   run "PersistentVector" [
