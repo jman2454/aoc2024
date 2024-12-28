@@ -15,18 +15,17 @@ let neighbors (x, y) = [ (x + 1, y); (x - 1, y); (x, y + 1); (x, y - 1) ]
 let max = 9
 
 let paths_to_nines start grid =
-  let rec h start visited nines = 
-    if not @@ (Grid.in_bounds start grid) || TupleSet.mem start visited then nines else
+  let rec h start nines = 
+    if not @@ (Grid.in_bounds start grid) then nines else
     let n = Grid.at start grid in 
     if n = max then nines + 1 else
-    let visited = TupleSet.add start visited in
     List.fold_left (fun nines neighbor -> 
       match Grid.at_opt neighbor grid with 
-      | Some(m) when m = n + 1 -> h neighbor visited nines
+      | Some(m) when m = n + 1 -> h neighbor nines
       | _ -> nines
     ) nines (neighbors start)
   in
-  h start TupleSet.empty 0
+  h start 0
 
 let zeros grid = 
   Grid.mapi (fun pos el -> if el = 0 then Some(pos) else None) grid 
