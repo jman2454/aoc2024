@@ -281,6 +281,38 @@ let test_fold_map () =
   check int "10 items" 10 (len vec);
   check int "Sum" (fold_left ((-)) 0 vec) sum
 
+let test_union_find () = 
+  let open Aoc.UnionFind in 
+  let uf = of_list ['a'; 'b'; 'c'; 'd'; 'e'] in 
+  check bool "same check on init" false (same_no_compress 0 1 uf);
+  check bool "same check on init" false (same_no_compress 0 2 uf);
+  check bool "same check on init" false (same_no_compress 0 3 uf);
+  check bool "same check on init" false (same_no_compress 0 4 uf);
+
+  let uf = union 0 1 uf in 
+  check bool "same check on merged" true (same_no_compress 0 1 uf);
+  check bool "same check on init" false (same_no_compress 0 2 uf);
+  check bool "same check on init" false (same_no_compress 0 3 uf);
+  check bool "same check on init" false (same_no_compress 0 4 uf);
+
+  let uf = union 1 4 uf in 
+  check bool "same check on init" true (same_no_compress 0 1 uf);
+  check bool "same check on init" false (same_no_compress 0 2 uf);
+  check bool "same check on init" false (same_no_compress 0 3 uf);
+  check bool "same check on init" true (same_no_compress 0 4 uf);
+
+  let uf = union 2 3 uf in 
+  check bool "same check on init" true (same_no_compress 0 1 uf);
+  check bool "same check on init" false (same_no_compress 0 2 uf);
+  check bool "same check on init" false (same_no_compress 0 3 uf);
+  check bool "same check on init" true (same_no_compress 0 4 uf);
+
+  let uf = union 3 0 uf in 
+  check bool "same check on init" true (same_no_compress 0 1 uf);
+  check bool "same check on init" true (same_no_compress 0 2 uf);
+  check bool "same check on init" true (same_no_compress 0 3 uf);
+  check bool "same check on init" true (same_no_compress 0 4 uf)
+
 let () =
   run "PersistentVector" [
     "make_vec", [
@@ -325,5 +357,8 @@ let () =
     ];
     "pqueue", [
       test_case "Priority queue basic test" `Quick test_pq;
+    ];
+    "union_find", [
+      test_case "Union find basic test" `Quick test_union_find;
     ];
 ]
