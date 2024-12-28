@@ -1,6 +1,6 @@
 include Pvector
 
-(* add-only datastructure *)
+(* add-only, persistent + immutable datastructure *)
 type 'a node = { value : 'a; parent : int }
 type 'a t = 'a node Pvector.t
 
