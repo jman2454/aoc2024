@@ -4,6 +4,8 @@ include Pvector
 type 'a node = { value : 'a; parent : int }
 type 'a t = 'a node Pvector.t
 
+(* improvement: make this a functor, s.t. we can have different backing data structures (e.g. a grid) *)
+
 (* Indices from the original list provide access to elements in the union find -- so users must track them *)
 let of_pvector (vec : 'a Pvector.t) : 'a t = Pvector.mapi (fun i el -> { value = el; parent = i }) vec
 let of_list (lst : 'a list) : 'a t = of_pvector (Pvector.of_list lst)

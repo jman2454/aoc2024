@@ -1,5 +1,5 @@
 open Alcotest
-open Aoc.Pvector  (* Replace with the actual name of your module *)
+open Aoc.Pvector
 
 let test_make_vec () =
   let v0 = make_vec 0 0 in
@@ -283,7 +283,8 @@ let test_fold_map () =
 
 let test_union_find () = 
   let open Aoc.UnionFind in 
-  let uf = of_list ['a'; 'b'; 'c'; 'd'; 'e'] in 
+  let open Aoc.UnionFind.VectorUnionFind in
+  let uf = uf_of_list ['a'; 'b'; 'c'; 'd'; 'e'] in 
   check bool "same check on init" false (same_no_compress 0 1 uf);
   check bool "same check on init" false (same_no_compress 0 2 uf);
   check bool "same check on init" false (same_no_compress 0 3 uf);

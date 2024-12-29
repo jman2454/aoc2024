@@ -4,7 +4,7 @@ module Grid = Grid
 module Pvector = Pvector
 module AocQueue = Queue
 module Pqueue = Pqueue
-module UnionFind = Unionfind
+module UnionFind = Unionfindfunctor
 
 let (<--) = Pvector.(<--)
 let (-->) = Pvector.(-->)

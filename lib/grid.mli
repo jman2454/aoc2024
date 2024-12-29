@@ -5,4 +5,6 @@ val in_bounds : int * int -> 'a t -> bool
 val at_opt : int * int -> 'a t -> 'a option
 val set : int * int -> 'a -> 'a t -> 'a t
 val fold_left : ('b -> 'a -> 'b) -> 'b -> 'a t -> 'b
+val fold_lefti : ('b -> int * int -> 'a -> 'b) -> 'b -> 'a t -> 'b
 val mapi : (int * int -> 'a -> 'b) -> 'a t -> 'b t
+val map : ('a -> 'b) -> 'a t -> 'b t
