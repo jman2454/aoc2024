@@ -20,8 +20,6 @@ struct
   let (-->) d k = Data.at k d
   let (<--) (d, k) el = Data.set k el d
 
-  (* improvement: make this a functor, s.t. we can have different backing data structures (e.g. a grid) *)
-
   (* returns a token identifying the set containing the element at index i, and the (maybe) updated union find *)
   let find i (uf : 'a t) = 
     let rec h i = 
@@ -45,6 +43,7 @@ struct
     let l_rep, uf = find i_l uf in 
     let r_rep, uf = find i_r uf in 
     if l_rep <> r_rep then 
+      (* union by rank here -- set the rep element of the deeper tree to be that of the shallower tree *)
       (uf, r_rep) <-- { (uf --> r_rep) with parent = l_rep }
     else
       uf
