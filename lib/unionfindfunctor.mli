@@ -4,6 +4,7 @@ module type RandomAccess =
     type key
     val at : key -> 'a t -> 'a
     val set : key -> 'a -> 'a t -> 'a t
+    val mem : key -> 'a t -> bool
     val keyed_map : (key -> 'a -> 'b) -> 'a t -> 'b t
     val keyed_fold : ('acc -> key -> 'a -> 'acc) -> 'acc -> 'a t -> 'acc
   end
@@ -39,9 +40,9 @@ module VectorUnionFind :
   end
 module GridUnionFind :
   sig
-    type 'a node = { value : 'a; parent : int * int; }
-    type 'a t = 'a node Grid.t
-    (* val of_data : 'a Grid.t -> 'a t *)
+    type 'a node
+    type 'a t
+    val of_data : 'a Grid.t -> 'a t
     val find : int * int -> 'a t -> (int * int) * 'a t
     val find_no_compress : int * int -> 'a t -> int * int
     val union : int * int -> int * int -> 'a t -> 'a t
